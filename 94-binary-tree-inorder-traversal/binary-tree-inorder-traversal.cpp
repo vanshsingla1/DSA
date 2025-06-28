@@ -12,21 +12,28 @@
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
+        //MORRIS TRAVERSAL
         vector<int> res;
         if(root == NULL)
         return res;
-        stack<TreeNode*> stk;
         TreeNode *ptr = root;
-        while(!stk.empty() || ptr != NULL) {
-            while(ptr) {
-                stk.push(ptr);
-                ptr = ptr->left;
+        while(ptr != NULL) {
+            if(ptr->left == NULL) {
+                res.push_back(ptr->val);
+                ptr = ptr->right;
             }
-            // now left portion is traversed and push the top element into stack
-            ptr = stk.top();
-            stk.pop();
-            res.push_back(ptr->val);
-            ptr = ptr->right;
+            else {
+                TreeNode *leftchild = ptr->left;
+                while(leftchild->right != NULL)
+                {
+                    leftchild = leftchild->right;
+                }
+                leftchild->right = ptr;
+                // now delete the connection b/w root and its left
+                TreeNode *temp = ptr;
+                ptr = ptr->left;
+                temp->left = NULL;
+            }
         }
         return res;
     }
