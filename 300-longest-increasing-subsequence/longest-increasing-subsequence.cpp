@@ -1,17 +1,18 @@
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        // Patience Sort
-        vector<int> res;
-        for(int x : nums) {
-            auto it = lower_bound(res.begin(),res.end(),x);
-            if(it == res.end()) {
-                //not found
-                res.push_back(x);
+        int n = nums.size();
+        vector<int> dp(n,1);
+        int res = 1;
+        // dp is intitialized with 1(length), initally single element is a subsequence also
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<i; j++) {
+                if(nums[i] > nums[j]) {
+                    dp[i] = max(dp[i],dp[j]+1);
+                    res = max(res,dp[i]);
+                }
             }
-            else
-            *it = x; // replace with the smallest value
         }
-        return res.size();
+        return res;
     }
 };
