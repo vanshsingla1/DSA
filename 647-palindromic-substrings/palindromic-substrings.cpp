@@ -1,28 +1,29 @@
 class Solution {
 public:
-    int isPalindrome(string s,int i,int j,vector<vector<int>> &dp) {
-        if(i > j) {
-            // dp[i][j] = 1;
-            return 1;
-        }
-
-        if(dp[i][j] != -1)
-        return dp[i][j];
-
-        if(s[i] != s[j]) 
-        return dp[i][j] = 0;
-
-        else {
-            return dp[i][j] = isPalindrome(s,i+1,j-1,dp);
-        }
-    }
+    
     int countSubstrings(string s) {
+        //bottom up
         int n = s.length();
         int count = 0;
-        vector<vector<int>> dp(n,vector<int>(n,-1)); // 0 false 1 true
-        for(int i=0; i<n; i++) {
-            for(int j=i; j<n; j++) {
-                if(isPalindrome(s,i,j,dp))
+        vector<vector<bool>> dp(n,vector<bool>(n,false)); 
+        for(int len=1; len<=n; len++) {
+            for(int i=0; i+len-1<n; i++) {
+                int j = i+len-1;
+                if(i == j)
+                dp[i][j] = true;// stings of length 1
+                else if(i+1 == j) {
+                    if(s[i] == s[j])
+                    dp[i][j] = true; // strings of length 2
+                    else
+                    dp[i][j] = false;
+                }
+                else {
+                    if(s[i] == s[j] && dp[i+1][j-1])
+                    dp[i][j] = true;
+                    else
+                    dp[i][j] = false;
+                }
+                if(dp[i][j])
                 count++;
             }
         }
