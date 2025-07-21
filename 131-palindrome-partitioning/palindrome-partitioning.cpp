@@ -1,11 +1,14 @@
 class Solution {
 public:
-    bool isPalindrome(string s,int i,int j) {
+    vector<vector<int>> dp;
+    int isPalindrome(string s,int i,int j) {
         if(i > j)
-        return true;
+        return 1;
+        if(dp[i][j] != -1)
+        return dp[i][j];
         if(s[i] != s[j])
-        return false;
-        return isPalindrome(s,i+1,j-1);
+        return dp[i][j] = 0;
+        return dp[i][j] = isPalindrome(s,i+1,j-1);
     }
     void fun(string s,vector<string> path,vector<vector<string>> &res,int idx) {
         if(idx >= s.size()) {
@@ -24,6 +27,7 @@ public:
         int n = s.length();
         vector<vector<string>> res;
         vector<string> path;
+        dp = vector<vector<int>>(n,vector<int>(n,-1));
         fun(s,path,res,0); 
         return res;
     }
