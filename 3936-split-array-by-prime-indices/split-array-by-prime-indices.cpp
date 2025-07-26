@@ -1,6 +1,7 @@
 class Solution {
 public:
     long long splitArray(vector<int>& nums) {
+        //sieve of erathosthemes
         int n = nums.size();
         vector<long long>prime(n+1,1);
         prime[0] = 0; // not a prime number
