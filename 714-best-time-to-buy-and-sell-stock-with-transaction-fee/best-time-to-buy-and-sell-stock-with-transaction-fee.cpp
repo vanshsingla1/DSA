@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int fun(vector<int>& prices,vector<vector<int>> &dp,int fee,int n,int i,int buy) {
+        if(i == n)
+        return 0;
+        if(dp[i][buy] != -1)
+        return dp[i][buy];
+        if(buy) {
+            dp[i][buy] = max(-prices[i]+fun(prices,dp,fee,n,i+1,0),0+fun(prices,dp,fee,n,i+1,1));
+        }
+        else {
+            dp[i][buy] = max(prices[i]-fee+fun(prices,dp,fee,n,i+1,1),0+fun(prices,dp,fee,n,i+1,0));
+            // fee will be deducted at the time of selling stock
+        }
+        return dp[i][buy];
+    }
+    int maxProfit(vector<int>& prices, int fee) {
+        int n = prices.size();
+        vector<vector<int>> dp(n,vector<int> (2,-1));
+        // 1->buy
+        // 0->sell
+        return fun(prices,dp,fee,n,0,1);
+    }
+};
