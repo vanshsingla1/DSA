@@ -2,69 +2,69 @@ class Solution {
 public:
     int minimumArea(vector<vector<int>>& grid) {
         int m = grid.size();
-        int n = grid[0].size();
-        int i = 0;
-        int j = m - 1;
-        while (i <= j) {
-            bool flag1 = false;
-            bool flag2 = false;
-            for (int k = 0; k < n; k++) {
-                if (grid[i][k] == 1) {
-                    flag1 = true;
-                    break;
-                }
-            }
-            for (int k = 0; k < n; k++) {
-                if (grid[j][k] == 1) {
-                    flag2 = true;
-                    break;
-                }
-            }
+        int n = grid[0].size();   
 
-            if (flag1 && flag2)
+        int p1, p2;
+        int c1, c2;
+
+        for (int i=0; i<m; i++){
+            bool flag = false;
+            for (int j=0; j<n; j++){
+                if(grid[i][j]==1){
+                    p1=i;
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag) {
                 break;
-            if (!flag1)
-                i++;
-            if (!flag2)
-                j--;
+            }
         }
 
-        if (i > j)
-            return 0;
-
-        int maxHeight = j - i + 1;
-
-        
-        i = 0;
-        j = n - 1;
-        while (i <= j) {
-            bool flag1 = false;
-            bool flag2 = false;
-            for (int k = 0; k < m; k++) {
-                if (grid[k][i] == 1) {
-                    flag1 = true;
+        for (int i=m-1; i>=0; i--){
+            bool flag = false;
+            for (int j=0; j<n; j++){  
+                if(grid[i][j]==1){
+                    p2=i;
+                    flag = true;
                     break;
                 }
             }
-            for (int k = 0; k < m; k++) {
-                if (grid[k][j] == 1) {
-                    flag2 = true;
-                    break;
-                }
-            }
-
-            if (flag1 && flag2)
+            if(flag) {
                 break;
-            if (!flag1)
-                i++;
-            if (!flag2)
-                j--;
+            }
+        }
+        if(p1 > p2)
+        return 0;
+        for (int i=0; i<n; i++){
+            bool flag = false;
+            for (int j=0; j<m; j++){
+                if(grid[j][i]==1){   // ✅ swap indices (check col properly)
+                    c1=i;
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag) {
+                break;
+            }
         }
 
-        if (i > j)
-            return 0;
-
-        int maxWeight = j - i + 1;
-        return maxHeight * maxWeight;
+        for (int i=n-1; i>=0; i--){   // ✅ loop over cols
+        bool flag = false;
+            for (int j=m-1; j>=0; j--){
+                if(grid[j][i]==1){
+                    c2=i;   // ✅ fix: c2 not p2
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag) {
+                break;
+            }
+        }
+        if(c1 > c2)
+        return 0;
+        return abs(p2 - p1 + 1) * abs(c2 - c1 + 1);
     }
 };
