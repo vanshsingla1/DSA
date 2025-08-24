@@ -1,8 +1,9 @@
 class Solution {
 public:
     int gcdOfOddEvenSums(int n) {
-        int sumOdd = n*n;
-        int sumEven = n*(n+1);
-        return gcd(sumOdd,sumEven);
+        // gcd(n*n, n*n+n) = n * gcd(n,n+1)
+        //  gcd of two consecutive numbers is always 1
+        // so ans is n
+        return n;
     }
 };
