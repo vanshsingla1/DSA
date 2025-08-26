@@ -4,27 +4,34 @@ public:
         // dijkstra
         vector<int> res(n,INT_MAX);
         res[src] = 0;
+        int count = 0;
         priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
         pq.push({0,src});
         while(!pq.empty()) {
             int node = pq.top().second;
             int d = pq.top().first;
             pq.pop();
+            if (d > res[node]) continue;
+            if (d > threshold) break;
+            if(node != src) {
+                count++;
+            }
+            if (count == n - 1) break;
             for(auto next : adj[node]) {
                 int dist = next.second;
                 int nextnode = next.first;
-                if(d + dist < res[nextnode]) {
+                if(d + dist < res[nextnode] && d+dist <= threshold) {
                     res[nextnode] = d + dist;
                     pq.push({d+dist,nextnode});
                 }
             }
         }
-        int count = 0;
-        for(int i=0; i<n; i++) {
-            if(i != src && res[i] <= threshold) {
-                count++;
-            }
-        }
+        // int count = 0;
+        // for(int i=0; i<n; i++) {
+        //     if(i != src && res[i] <= threshold) {
+        //         count++;
+        //     }
+        // }
         return count;
     }
     int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
