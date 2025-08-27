@@ -1,23 +1,19 @@
 class Solution {
 public:
-    int subarraySum(vector<int>& nums, int k) {
-        // brute force
+    int subarraySum(vector<int>& nums, int target) {
         int n = nums.size();
+        map<int,int> mp;
+        mp.insert({0,1}); // edge case, add 0 intially with count 1
+        // prefixSum count
+        int presum = 0;
         int count = 0;
         for(int i=0; i<n; i++) {
-            int sum = nums[i];
-            if(sum == k) {
-                count++;
+            presum += nums[i];
+            if(mp.find(presum-target) != mp.end()) {
+                // mil gyaa
+                count += mp[presum-target];
             }
-            for(int j=i+1; j<n; j++) {
-                sum += nums[j];
-                if(sum == k) {
-                    count++;
-                }
-                // if(sum > k) {
-                //     break;
-                // }
-            }
+            mp[presum]++;
         }
         return count;
     }
