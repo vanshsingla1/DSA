@@ -13,7 +13,7 @@ public:
         queue<pair<int,int>> q;
         q.push({0,n-1});
         visited[0][n-1] = 1; // visited
-        vector<vector<int>> res(n, vector<int> (n,-1));
+        // vector<vector<int>> res(n, vector<int> (n,-1));
         int level = 0;
         // res[0][n-1] = grid[0][n-1];
         while(!q.empty()) {
@@ -47,10 +47,10 @@ public:
                 sort(temp.begin(),temp.end(),greater<int>());
             }
             for(int i=0; i<p.size(); i++) {
-                res[p[i].first][p[i].second] = temp[i];
+                grid[p[i].first][p[i].second] = temp[i];
             }
             level++;
         }
-        return res; 
+        return grid; 
     }
 };
