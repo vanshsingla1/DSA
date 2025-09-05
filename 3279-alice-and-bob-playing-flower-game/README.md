@@ -7,7 +7,7 @@
 <ol>
 	<li>Alice takes the first turn.</li>
 	<li>In each turn, a player must choose either one of the lane&nbsp;and pick one flower from that side.</li>
-	<li>At the end of the turn, if there are no flowers left at all, the <strong>current</strong> player captures their opponent and wins the game.</li>
+	<li>At the end of the turn, if there are no flowers left at all in either lane, the <strong>current</strong> player captures their opponent and wins the game.</li>
 </ol>
 
 <p>Given two integers, <code>n</code> and <code>m</code>, the task is to compute the number of possible pairs <code>(x, y)</code> that satisfy the conditions:</p>
