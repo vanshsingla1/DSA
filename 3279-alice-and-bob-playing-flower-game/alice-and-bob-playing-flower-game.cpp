@@ -4,6 +4,7 @@ public:
         // i want that (i+j)%2 == 1
         // for this one number should be odd and other should be even
         // so all possile pairs are (odd i * even j) + (even i * odd j)
+        // Cp problem
         long long oddi = 0;
         long long eveni = 0;
         long long oddj = 0;
