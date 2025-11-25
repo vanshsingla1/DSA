@@ -2,6 +2,9 @@ class Solution {
 public:
     bool res = false;
     void fun(int i,int j,int m,int n,vector<vector<bool>> &visited,vector<vector<char>>& board,string word,string temp,int k) {
+        if(res) {
+            return; // stop early
+        }
         if(i >= m || i < 0 || j >= n || j < 0) {
             return ;
         }
