@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void fun(vector<int> &nums,vector<vector<int>> &res,vector<int> temp,int i) {
+    void fun(vector<int> &nums,vector<vector<int>> &res,vector<int> &temp,int i) {
         if(i >= nums.size()) {
             res.push_back(temp);
             return;
