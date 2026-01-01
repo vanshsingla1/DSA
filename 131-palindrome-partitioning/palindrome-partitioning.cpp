@@ -1,48 +1,32 @@
 class Solution {
 public:
-    vector<vector<int>> dp;
-    void isPalindrome(string s) {
-        int n = s.length();
-        for(int len=1; len<=n; len++) {
-            for(int i=0; i+len-1<n; i++) {
-                int j = i+len-1;
-                if(i == j)
-                dp[i][j]=1;
-                else if(i+1 == j) {
-                    if(s[i]==s[j])
-                    dp[i][j]=1;
-                    else
-                    dp[i][j]=0;
-                }
-                else {
-                    if(s[i]==s[j] && dp[i+1][j-1])
-                    dp[i][j]=1;
-                    else
-                    dp[i][j]=0;
-                }
-            }
-        }
+    bool isPalindrome(string s,int i,int j) {
+        if(i > j)
+        return true;
+        if(s[i] != s[j])
+        return false;
+        return isPalindrome(s,i+1,j-1);
     }
-    void fun(string s,vector<string> path,vector<vector<string>> &res,int idx) {
-        if(idx == s.length()) {
-            res.push_back(path);
+    void fun(string s,vector<vector<string>> &res,vector<string> &temp,int i) {
+        if(i >= s.size()) {
+            res.push_back(temp);
             return;
         }
-        for(int j=idx; j<s.length(); j++) {
-            if(dp[idx][j]) {
-                path.push_back(s.substr(idx,j-idx+1));
-                fun(s,path,res,j+1);
-                path.pop_back();
+        for(int j=i; j<s.size(); j++) {
+            if(isPalindrome(s,i,j)) {
+                temp.push_back(s.substr(i,j-i+1));
+                fun(s,res,temp,j+1);
+                temp.pop_back();
             }
         }
     }
     vector<vector<string>> partition(string s) {
-        int n = s.length();
-        dp = vector<vector<int>>(n,vector<int>(n,-1));
-        vector<string> path;
         vector<vector<string>> res;
-        isPalindrome(s); // pre computed dp
-        fun(s,path,res,0);
+        if(s.empty()) {
+            return res;
+        }
+        vector<string> temp;
+        fun(s,res,temp,0);
         return res;
     }
 };
