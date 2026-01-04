@@ -1,47 +1,32 @@
 class Solution {
 public:
-    int factors(int num) {
-        int count = 0;
-        int sum = 0;
-        for(int i=1; i <= num; i++) {
-            if(count > 4) {
-                return 0;
-            }
-            if(num%i == 0) {
-                sum += i;
-                count++;
-            }
+    bool isPrime(int x) {
+        if (x < 2)
+            return false;
+        for (int i = 2; i * i <= x; i++) {
+            if (x % i == 0)
+                return false;
         }
-        return sum;
+        return true;
     }
     int sumFourDivisors(vector<int>& nums) {
-        // Rules :
-        // 1 no. should not be a prime no
-        // 2 no. should not be a perfect sq
-        // then calculate factors and check 
-        int maxx = *max_element(nums.begin(),nums.end());
-        vector<bool> prime(maxx+1,true);
-        for(int i=2; i*i <= maxx; i++) {
-            if(prime[i] == true) {
-                for(int j = i*i; j<=maxx; j += i) {
-                    prime[j] = false;
+        int sum = 0;
+        for (int num : nums) {
+            int r = round(cbrt(num));
+            if (r * r * r == num && isPrime(r)) {
+                sum += 1 + r + r * r + num;
+                continue;
+            }
+            for (int d = 2; d * d <= num; d++) {
+                if (num % d == 0) {
+                    int other = num / d;
+                    if (d != other && isPrime(d) && isPrime(other)) {
+                        sum += 1 + d + other + num;
+                    }
+                    break;
                 }
             }
         }
-        // now traverse for the nums
-        int count = 0;
-        for(int i=0; i<nums.size(); i++) {
-            if(prime[nums[i]]) {
-                continue;
-            }
-            else if((int)sqrt(nums[i]) * (int)sqrt(nums[i]) == nums[i]) {
-                continue;
-            }
-            else {
-                // check the factors
-                count += factors(nums[i]);
-            }
-        }
-        return count;
+        return sum;
     }
 };
