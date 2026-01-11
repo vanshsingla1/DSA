@@ -2,6 +2,7 @@ class Solution {
 public:
     int maximumGain(string s, int x, int y) {
         // two pointer
+        // can be done by stack also
         if(x < y) { // ab should have higher score
             swap(x,y);
             reverse(s.begin(),s.end());
