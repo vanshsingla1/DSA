@@ -1,29 +1,32 @@
 class Solution {
 public:
-    int minimumPairRemoval(std::vector<int>& nums) {
+    int fun(vector<int>& nums) {
+        int idx = -1;
+        int sum = 0;
+        int minsum = INT_MAX;
+        for (int i = 0; i < nums.size() - 1; i++) {
+            sum = nums[i] + nums[i + 1];
+            if (sum < minsum) {
+                minsum = sum;
+                idx = i;
+            }
+        }
+        return idx;
+    }
+    int minimumPairRemoval(vector<int>& nums) {
+        // no need to worry about time complexity
+        int n = nums.size();
         int count = 0;
-        while (nums.size() > 1) {
-            bool isAscending = true;
-            int minSum = std::numeric_limits<int>::max();
-            int targetIndex = -1;
-            for (size_t i = 0; i < nums.size() - 1; ++i) {
-                int sum = nums[i] + nums[i + 1];
+        while (!is_sorted(begin(nums), end(nums))) {
+            // find the pair with min index sum
+            // traverse the whole array
+            int idx = fun(nums);
+            // replace nums[i] at idx index with the sum, and remove the next
+            // idx
 
-                if (nums[i] > nums[i + 1]) {
-                    isAscending = false;
-                }
-
-                if (sum < minSum) {
-                    minSum = sum;
-                    targetIndex = static_cast<int>(i);
-                }
-            }
-            if (isAscending) {
-                break;
-            }
+            nums[idx] = nums[idx] + nums[idx + 1];
+            nums.erase(begin(nums) + idx + 1);
             count++;
-            nums[targetIndex] = minSum;
-            nums.erase(nums.begin() + targetIndex + 1);
         }
         return count;
     }
