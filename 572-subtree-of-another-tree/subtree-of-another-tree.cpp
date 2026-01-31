@@ -16,10 +16,11 @@ public:
         if(root != NULL && subroot == NULL) return false;
         if(root == NULL && subroot != NULL) return false;
         if(root->val != subroot->val) return false;
-        if(root->val == subroot->val) {
+        if(root->val == subroot->val) 
             return (fun(root->left,subroot->left) && fun(root->right,subroot->right));
-        }
-        return (fun(root->left,subroot) || fun(root->right,subroot));
+        
+        // return (fun(root->left,subroot) || fun(root->right,subroot));
+        return false;
     }
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
         if(root == NULL) return false;
